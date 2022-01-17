@@ -50,7 +50,7 @@ app.post("/not", (req, res) => {
       if (error){
           console.log(error);
       }else{
-          res.send(response.body.status)
+          res.send({"status": response.body.status})
       }})
 })
 
