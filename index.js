@@ -33,14 +33,25 @@ app.post("/create-payment-pix", async (req, res) => {
       mercadopago.payment.create(payment_data).then(function (data) {
         res.send({
             pix: data.body.point_of_interaction.transaction_data.qr_code,
-            qr_code: data.body.point_of_interaction.transaction_data.qr_code_base64
+            qr_code: data.body.point_of_interaction.transaction_data.qr_code_base64,
+            id: data.body.id
         })
     })
 })
 
 app.post("/not", (req, res) => {
-  console.log(req.query);
-  res.send(req.query);
+  var id = req.query.id;
+
+    var filtro = {
+      "order.id": id
+    }
+
+    mercadopago.payment.get(id, mercadopago, (error, response) => {
+      if (error){
+          console.log(error);
+      }else{
+          res.send(response.body.status)
+      }})
 })
 
 app.listen(process.env.PORT || 5000)
