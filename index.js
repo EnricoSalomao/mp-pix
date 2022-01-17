@@ -40,7 +40,7 @@ app.post("/create-payment-pix", async (req, res) => {
 
 app.post("/not", (req, res) => {
   console.log(req.query);
-  res.send("Ok");
+  res.send("ol");
 })
 
 app.listen(process.env.PORT || 5000)
