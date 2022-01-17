@@ -37,4 +37,6 @@ app.post("/create-payment-pix", async (req, res) => {
         })
     })
 })
-app.listen(9000)
+app.connection({
+  port: process.env.PORT || 3000 
+});
