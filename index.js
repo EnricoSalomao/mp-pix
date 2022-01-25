@@ -10,7 +10,7 @@ app.use(express.json());
 
 app.use(cors());
 
-mercadopago.configurations.setAccessToken('APP_USR-6278788611971337-122401-8fa0d12a8b3277c1e2b5562677e34df4-351591541');
+mercadopago.configurations.setAccessToken('APP_USR-926258385253222-061700-ba337371f0cdce4ea391572889c99fcd-645316721');
 
 app.post("/create-payment-pix", async (req, res) => {
     const { amount, name, last_name, email, cpf } = req.body;
@@ -41,10 +41,6 @@ app.post("/create-payment-pix", async (req, res) => {
 
 app.post("/not", (req, res) => {
   var id = req.query.id;
-
-    var filtro = {
-      "order.id": id
-    }
 
     mercadopago.payment.get(id, mercadopago, (error, response) => {
       if (error){
