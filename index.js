@@ -50,6 +50,17 @@ app.post("/not", (req, res) => {
       }})
 })
 
+app.post("/nott", (req, res) => {
+  var id = req.query.id;
+
+    mercadopago.preferences.get(id, mercadopago, (error, response) => {
+      if (error){
+          console.log(error);
+      }else{
+          res.send({"status": response.body.status})
+      }})
+})
+
 app.post("/create-payment-card", async (req, res) => {
   const { amount } = req.body;
 
@@ -67,12 +78,13 @@ app.post("/create-payment-card", async (req, res) => {
   .then(function(response){
     res.send({
       id: response.body.id,
-      link: response.body.init_point
+      link: response.body.init_point,
+      response
   })
-    global.id = response.body.id;
   }).catch(function(error){
     console.log(error);
   });
+
 })
 
 app.listen(process.env.PORT || 5000)
