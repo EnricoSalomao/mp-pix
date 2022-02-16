@@ -50,4 +50,29 @@ app.post("/not", (req, res) => {
       }})
 })
 
+app.post("/create-payment-card", async (req, res) => {
+  const { amount } = req.body;
+
+  let preference = {
+    items: [
+      {
+        title: 'meu produto',
+        unit_price: amount,
+        quantity: 1,
+      }
+    ]
+  };
+  
+  mercadopago.preferences.create(preference)
+  .then(function(response){
+    res.send({
+      id: response.body.id,
+      link: response.body.init_point
+  })
+    global.id = response.body.id;
+  }).catch(function(error){
+    console.log(error);
+  });
+})
+
 app.listen(process.env.PORT || 5000)
