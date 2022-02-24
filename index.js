@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require('cors');
 
 const mercadopago = require('mercadopago');
+const { response } = require("express");
 
 const app = express();
 
@@ -10,14 +11,13 @@ app.use(express.json());
 
 app.use(cors());
 
-mercadopago.configurations.setAccessToken('APP_USR-926258385253222-061700-ba337371f0cdce4ea391572889c99fcd-645316721');
+mercadopago.configurations.setAccessToken(/*COLOQUE A SUA CHAVE DO MP*/);
 
 app.post("/create-payment-pix", async (req, res) => {
     const { amount, name, last_name, email, cpf } = req.body;
 
     var payment_data = {
         transaction_amount: amount,
-        description: 'Título do produto',
         payment_method_id: 'pix',
         payer: {
           email: email,
@@ -49,42 +49,3 @@ app.post("/not", (req, res) => {
           res.send({"status": response.body.status})
       }})
 })
-
-app.post("/nott", (req, res) => {
-  var id = req.query.id;
-
-    mercadopago.preferences.get(id, mercadopago, (error, response) => {
-      if (error){
-          console.log(error);
-      }else{
-          res.send({"status": response.body.status})
-      }})
-})
-
-app.post("/create-payment-card", async (req, res) => {
-  const { amount } = req.body;
-
-  let preference = {
-    items: [
-      {
-        title: 'meu produto',
-        unit_price: amount,
-        quantity: 1,
-      }
-    ]
-  };
-  
-  mercadopago.preferences.create(preference)
-  .then(function(response){
-    res.send({
-      id: response.body.id,
-      link: response.body.init_point,
-      response
-  })
-  }).catch(function(error){
-    console.log(error);
-  });
-
-})
-
-app.listen(process.env.PORT || 5000)
