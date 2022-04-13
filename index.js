@@ -18,6 +18,7 @@ app.post("/create-payment-pix", async (req, res) => {
 
     var payment_data = {
         transaction_amount: amount,
+        description: 'Título do produto',
         payment_method_id: 'pix',
         payer: {
           email: email,
