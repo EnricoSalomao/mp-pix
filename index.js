@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require('cors');
 
 const mercadopago = require('mercadopago');
-const { response } = require("express");
 
 const app = express();
 
@@ -43,6 +42,10 @@ app.post("/create-payment-pix", async (req, res) => {
 app.post("/not", (req, res) => {
   var id = req.query.id;
 
+    var filtro = {
+      "order.id": id
+    }
+
     mercadopago.payment.get(id, mercadopago, (error, response) => {
       if (error){
           console.log(error);
@@ -50,3 +53,5 @@ app.post("/not", (req, res) => {
           res.send({"status": response.body.status})
       }})
 })
+
+app.listen(process.env.PORT || 5000)
