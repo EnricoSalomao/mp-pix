@@ -11,7 +11,7 @@ app.use(express.json());
 
 app.use(cors());
 
-mercadopago.configurations.setAccessToken('APP_USR-5feae009-8ee0-483f-8399-7f6cc6e02ee3');
+mercadopago.configurations.setAccessToken('APP_USR-3846574531585858-040420-fba516282b67fc9d6770eccd2780a6b5-1100851120');
 
 app.post("/create-payment-pix", async (req, res) => {
     const { amount, name, last_name, email, cpf } = req.body;
